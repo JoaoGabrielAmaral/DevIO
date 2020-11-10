@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Context\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
+</Project>
