@@ -56,7 +56,8 @@ namespace DevIO.Data.Repository
 
         public virtual async Task Remover(Guid id)
         {
-            dbSet.Remove(new TEntity { Id = id });
+            var entity = new TEntity { Id = id };
+            dbSet.Remove(entity);
             await SaveChanges();
         }
 

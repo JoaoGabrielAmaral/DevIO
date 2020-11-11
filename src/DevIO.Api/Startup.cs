@@ -1,8 +1,6 @@
-using DevIO.Business.Interfaces;
-using DevIO.Business.Notifications;
-using DevIO.Business.Services;
+using AutoMapper;
+using DevIO.Api.Configuration;
 using DevIO.Data.Context;
-using DevIO.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,29 +24,14 @@ namespace DevIO.Api
         {
             services.AddControllers();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<DevIODbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
-            services.AddScoped<DevIODbContext>();
-
-            services.AddScoped<INotifier, Notifier>();
-
-            RegisterRepositories(services);
-
-            RegisterServices(services);
-        }
-
-        public void RegisterRepositories(IServiceCollection services)
-        {
-            services.AddScoped<IProdutoRepository, ProdutoRepository>();
-            services.AddScoped<IFornecedorRepository, FornecedorRepository>();
-            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
-        }
-
-        public void RegisterServices(IServiceCollection services)
-        {
-            services.AddScoped<IProdutoService, ProdutoService>();
-            services.AddScoped<IFornecedorService, FornecedorService>();
+            services.ResolveDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

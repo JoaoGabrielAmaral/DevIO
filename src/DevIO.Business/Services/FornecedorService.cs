@@ -22,8 +22,14 @@ namespace DevIO.Business.Services
 
         public async Task Adicionar(Fornecedor fornecedor)
         {
+            if (fornecedor == null)
+            {
+                Notifier("Informe os dados do fornecedor");
+                return;
+            }
+
             if (!Validate(new FornecedorValidation(), fornecedor)
-                && !Validate(new EnderecoValidation(), fornecedor.Endereco)) return;
+                || (fornecedor.Endereco != null && !Validate(new EnderecoValidation(), fornecedor.Endereco))) return;
 
             if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
             {
@@ -59,10 +65,22 @@ namespace DevIO.Business.Services
 
         public async Task Remover(Guid id)
         {
+            if (_fornecedorRepository.ObterPorId(id).Result == null)
+            {
+                Notifier("O fornecedor informado não foi encontrado!");
+                return;
+            }
+
             if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
             {
                 Notifier("O fornecedor possui produtos cadastrados!");
                 return;
+            }
+
+            var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
+            if (endereco != null)
+            {
+                await _enderecoRepository.Remover(endereco.Id);
             }
 
             await _fornecedorRepository.Remover(id);
