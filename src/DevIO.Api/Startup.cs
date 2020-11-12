@@ -3,6 +3,7 @@ using DevIO.Api.Configuration;
 using DevIO.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,9 +27,15 @@ namespace DevIO.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDbContext<DevIODbContext>(options =>
+            services.AddDbContext<DevIODbContext>(o =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.Configure<ApiBehaviorOptions>(o =>
+            {
+                o.SuppressModelStateInvalidFilter = true;
+
             });
 
             services.ResolveDependencies();

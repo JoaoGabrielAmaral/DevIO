@@ -39,7 +39,8 @@ namespace DevIO.Data.Repository
         public virtual async Task<TEntity> ObterPorId(Guid id)
         {
             return await dbSet
-                .FindAsync(id);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public virtual async Task Adicionar(TEntity entity)

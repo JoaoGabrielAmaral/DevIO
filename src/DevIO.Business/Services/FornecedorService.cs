@@ -65,12 +65,6 @@ namespace DevIO.Business.Services
 
         public async Task Remover(Guid id)
         {
-            if (_fornecedorRepository.ObterPorId(id).Result == null)
-            {
-                Notifier("O fornecedor informado não foi encontrado!");
-                return;
-            }
-
             if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
             {
                 Notifier("O fornecedor possui produtos cadastrados!");

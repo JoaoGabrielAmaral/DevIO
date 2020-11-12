@@ -16,5 +16,18 @@
     <ProjectReference Include="..\DevIO.Data\DevIO.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings - Cópia.Staging.Development.json">
+      <DependentUpon>appsettings.Staging.Development.json</DependentUpon>
+    </Content>
+    <Content Update="appsettings - Cópia.Staging.json">
+      <DependentUpon>appsettings.Staging.json</DependentUpon>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 
 </Project>
