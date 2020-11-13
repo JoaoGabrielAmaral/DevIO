@@ -94,9 +94,28 @@ namespace DevIO.Api.Controllers
                 return CustomResponse();
             }
 
+            var produtoAtualizacao = await _produtoRepository.ObterPorId(id);
+            produtoViewModel.Imagem = produtoAtualizacao.Imagem;
+
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _produtoService.Atualizar(_mapper.Map<Produto>(produtoViewModel));
+            if (produtoViewModel.ImagemUpload != null)
+            {
+                var fileName = $"{Guid.NewGuid()}_{produtoViewModel.Imagem}";
+                if (!UploadFile(fileName, produtoViewModel.ImagemUpload))
+                {
+                    return CustomResponse(produtoViewModel);
+                }
+
+                produtoAtualizacao.Imagem = fileName;
+            }
+
+            produtoAtualizacao.Nome = produtoViewModel.Nome;
+            produtoAtualizacao.Descricao = produtoViewModel.Descricao;
+            produtoAtualizacao.Valor = produtoViewModel.Valor;
+            produtoAtualizacao.Ativo = produtoViewModel.Ativo;
+
+            await _produtoService.Atualizar(_mapper.Map<Produto>(produtoAtualizacao));
 
             return CustomResponse(produtoViewModel);
         }
