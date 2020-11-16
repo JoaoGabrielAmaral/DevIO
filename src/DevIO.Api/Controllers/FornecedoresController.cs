@@ -21,9 +21,10 @@ namespace DevIO.Api.Controllers
 
         public FornecedoresController(IMapper mapper,
             INotifier notifier,
+            IUser user,
             IFornecedorRepository fornecedorRepository,
             IFornecedorService fornecedorService,
-            IEnderecoRepository enderecoRepository) : base(notifier)
+            IEnderecoRepository enderecoRepository) : base(notifier, user)
         {
             _mapper = mapper;
             _fornecedorRepository = fornecedorRepository;
@@ -50,8 +51,9 @@ namespace DevIO.Api.Controllers
             return fornecedor;
         }
 
+        [ClaimsAuthorize("Fornecedor", "Create")]
         [HttpPost]
-        public async Task<ActionResult<FornecedorViewModel>> Adicionar(FornecedorViewModel fornecedorView)
+        public async Task<ActionResult<FornecedorViewModel>> Create(FornecedorViewModel fornecedorView)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -61,8 +63,9 @@ namespace DevIO.Api.Controllers
             return CustomResponse(_mapper.Map<FornecedorViewModel>(fornecedor));
         }
 
+        [ClaimsAuthorize("Fornecedor", "Update")]
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<FornecedorViewModel>> Atualizar(Guid id, FornecedorViewModel fornecedorView)
+        public async Task<ActionResult<FornecedorViewModel>> Update(Guid id, FornecedorViewModel fornecedorView)
         {
             if (id != fornecedorView.Id)
             {
@@ -77,8 +80,9 @@ namespace DevIO.Api.Controllers
             return CustomResponse(fornecedorView);
         }
 
+        [ClaimsAuthorize("Fornecedor", "Remove")]
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<FornecedorViewModel>> Delete(Guid id)
+        public async Task<ActionResult<FornecedorViewModel>> Remove(Guid id)
         {
             var fornecedor = await _fornecedorRepository.ObterPorId(id);
             if (fornecedor == null) return NotFound();
@@ -88,6 +92,7 @@ namespace DevIO.Api.Controllers
             return CustomResponse(_mapper.Map<FornecedorViewModel>(fornecedor));
         }
 
+        [ClaimsAuthorize("Fornecedor", "Update")]
         [HttpPut("{fornecedorId:guid}/address/{id:guid}")]
         public async Task<ActionResult> UpdateAdress(Guid fornecedorId, Guid id, EnderecoViewModel enderecoViewModel)
         {

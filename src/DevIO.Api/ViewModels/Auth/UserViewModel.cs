@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DevIO.Api.ViewModels
+namespace DevIO.Api.ViewModels.Auth
 {
     public class RegisterUserViewModel
     {

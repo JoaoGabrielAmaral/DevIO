@@ -28,12 +28,9 @@ namespace DevIO.Api
             });
 
             services.AddIdentityConfiguration(Configuration);
-
             services.AddAutoMapper(typeof(Startup));
-
-            services.ResolveDependencies();
-
             services.WebApiConfig();
+            services.ResolveDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +39,11 @@ namespace DevIO.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("Development");
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseAuthentication();

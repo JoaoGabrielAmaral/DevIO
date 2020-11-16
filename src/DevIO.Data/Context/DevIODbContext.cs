@@ -9,7 +9,7 @@ namespace DevIO.Data.Context
 {
     public class DevIODbContext : DbContext
     {
-        public DevIODbContext(DbContextOptions options) : base(options) { }
+        public DevIODbContext(DbContextOptions<DevIODbContext> options) : base(options) { }
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }

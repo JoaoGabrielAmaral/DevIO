@@ -16,17 +16,25 @@ namespace DevIO.Api.Configuration
 
             });
 
+            services.AddCors(
+                c =>
+                {
+                    c.AddPolicy("Development", b =>
+                    {
+                        b.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
+                    });
+                });
+
             return services;
         }
 
         public static IApplicationBuilder UseMvcConfiguration(this IApplicationBuilder app)
         {
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
