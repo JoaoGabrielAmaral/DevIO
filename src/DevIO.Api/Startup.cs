@@ -30,6 +30,7 @@ namespace DevIO.Api
             services.AddIdentityConfiguration(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.WebApiConfig();
+            services.AddSwaggerConfig();
             services.ResolveDependencies();
         }
 
@@ -48,6 +49,8 @@ namespace DevIO.Api
 
             app.UseAuthentication();
             app.UseMvcConfiguration();
+
+            app.UseSwaggerConfig();
         }
     }
 }
