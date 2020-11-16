@@ -10,10 +10,22 @@ namespace DevIO.Api.Configuration
         {
             services.AddControllers();
 
+            services.AddApiVersioning(o =>
+            {
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+                o.ReportApiVersions = true;
+            });
+
+            services.AddVersionedApiExplorer(o =>
+            {
+                o.GroupNameFormat = "'v'VVV";
+                o.SubstituteApiVersionInUrl = true;
+            });
+
             services.Configure<ApiBehaviorOptions>(o =>
             {
                 o.SuppressModelStateInvalidFilter = true;
-
             });
 
             services.AddCors(
