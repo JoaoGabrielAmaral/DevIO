@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.Configuration
+namespace DevIO.Api.Extensions
 {
     public class ExceptionMiddleware
     {

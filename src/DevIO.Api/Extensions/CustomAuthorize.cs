@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 using System.Security.Claims;
 
-namespace DevIO.Api.V1.Controllers
+namespace DevIO.Api.Extensions
 {
     public class CustomAuthorize
     {

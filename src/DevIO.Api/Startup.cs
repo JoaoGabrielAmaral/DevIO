@@ -1,5 +1,6 @@
 using AutoMapper;
 using DevIO.Api.Configuration;
+using DevIO.Api.Extensions;
 using DevIO.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,9 +24,11 @@ namespace DevIO.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<DevIODbContext>(o =>
             {
-                o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                o.UseSqlServer(connectionString);
             });
 
             services.AddIdentityConfiguration(Configuration);
@@ -33,7 +36,7 @@ namespace DevIO.Api
             services.WebApiConfig();
             services.AddSwaggerConfig();
             services.ResolveDependencies();
-            services.AddLoggingConfig();
+            services.AddLoggingConfig(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
