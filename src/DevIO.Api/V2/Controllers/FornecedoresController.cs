@@ -37,5 +37,12 @@ namespace DevIO.Api.V2.Controllers
 
             return fornecedor;
         }
+
+        [HttpGet("teste")]
+        public void Teste()
+        {
+            var div = 0;
+            var result = 120 / div;
+        }
     }
 }

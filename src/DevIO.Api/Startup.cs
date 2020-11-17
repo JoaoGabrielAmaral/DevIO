@@ -33,6 +33,7 @@ namespace DevIO.Api
             services.WebApiConfig();
             services.AddSwaggerConfig();
             services.ResolveDependencies();
+            services.AddLoggingConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,8 +54,10 @@ namespace DevIO.Api
             }
 
             app.UseAuthentication();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseMvcConfiguration();
             app.UseSwaggerConfig(provider);
+            app.UseLoggingConfig();
         }
     }
 }
